@@ -17,20 +17,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 $(document).ready(function(){
-	comHeader = $('#comments > .comments-header');
+	Q = {
+		container: '#comments',
+		header: '> .title',
+		count: '#comments_count',
+		comment: {
+			container: '.comment',
+			info: '.info', // Direct descendant of container
+			scoreContainer: '.voting',
+			score: '.score',
+			sub: '.reply_comments',
+		}
+	}
+
+
+	comHeader = $(Q.container + Q.header);
 	comHeaderInfo = $('<span class="sokolovInfo" style="border-bottom: 1px dotted #AFA56A; margin-left: 1em">скрыты ниже <span class="minRating"></span></span>').appendTo(comHeader);
 	
 	function showAll()
 	{
-		$('#comments .sokolovHidden').removeClass('sokolovHidden');
+		$(Q.container + ' .sokolovHidden').removeClass('sokolovHidden');
 	}
 
 	function filter(minRating)
 	{
 		showAll();
-		$('#comments .comment_holder').each(function(){
+		$(Q.container + ' ' + Q.comment.container).each(function(){
 			var me = $(this);
-			var rating = parseInt(me.children('.msg-meta').find('.vote .mark span').text().replace('–','-'));
+			var rating = parseInt(me.children(Q.comment.info).find(Q.comment.score).text().replace('–','-'));
 			if (rating < minRating)
 				me.addClass('sokolovHidden');
 		});
@@ -39,17 +53,13 @@ $(document).ready(function(){
 
 	// Init
 	$('<style type="text/css"></style>').text(
-		'#comments .sokolovHidden > .msg-meta:hover { background-color: #B4FA8D }'
-		+'#comments .sokolovHidden > .entry-content, '
-		+'#comments .sokolovHidden > .msg-meta .date, '
-		+'#comments .sokolovHidden > .msg-meta .bookmark, '
-		+'#comments .sokolovHidden > .msg-meta .up-to-parent, '
-		+'#comments .sokolovHidden > .msg-meta .to-favs { display: none }').appendTo('head');
+		Q.container + ' .sokolovHidden '+Q.comment.info+':hover { background-color: #B4FA8D }'
+		+ Q.container + ' .sokolovHidden > *:not('+Q.comment.info+'):not('+Q.comment.sub+') { display: none }'
+		+ Q.container + ' .sokolovHidden > '+Q.comment.sub+'{ margin-top: 0 !important}'
+	).appendTo('head');
 
-	$('#comments .sokolovHidden > .msg-meta').live('click', function(){
-		$(this).parent()
-			.children('.entry-content').show('slow').attr('style','')
-			.parent().removeClass('sokolovHidden');
+	$(Q.container + ' .sokolovHidden').live('click', function(){
+		$(this).removeClass('sokolovHidden');
 	});
 
 	comHeaderInfo.click(function(){
@@ -60,7 +70,7 @@ $(document).ready(function(){
 	// Endinit
 
 
-	comCount = parseInt(comHeader.children('.js-comments-count').text());
+	comCount = parseInt(comHeader.find(Q.count).text());
 	if (comCount < 8)
 		filter(-1);
 	else if (comCount < 25)
