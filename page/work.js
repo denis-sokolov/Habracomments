@@ -58,8 +58,8 @@ $(document).ready(function(){
 		+ Q.container + ' .sokolovHidden > '+Q.comment.sub+'{ margin-top: 0 !important}'
 	).appendTo('head');
 
-	$(Q.container + ' .sokolovHidden').live('click', function(){
-		$(this).removeClass('sokolovHidden');
+	$(Q.container).on('click', ' .sokolovHidden '+Q.comment.info, function(e){
+		$(this).parents('.sokolovHidden').eq(0).removeClass('sokolovHidden');
 	});
 
 	comHeaderInfo.click(function(){
