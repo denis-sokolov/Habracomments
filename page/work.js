@@ -23,7 +23,7 @@ jQuery(document).ready(function($){
 		header: '> .title',
 		count: '#comments_count',
 		comment: {
-			container: '.comment',
+			container: '.comment_item',
 			info: '.info', // Direct descendant of container
 			scoreContainer: '.voting',
 			score: '.score',
@@ -32,6 +32,11 @@ jQuery(document).ready(function($){
 	};
 
 	var comHeader = $(Q.container + Q.header);
+
+	if (comHeader.length === 0) {
+		return;
+	}
+
 	var comHeaderInfo = $('<span class="sokolovInfo" style="border-bottom: 1px dotted #AFA56A; margin-left: 1em">скрыты ниже <span class="minRating"></span></span>').appendTo(comHeader);
 
 	function showAll() {

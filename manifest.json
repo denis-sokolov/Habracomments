@@ -11,8 +11,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"http://habrahabr.ru/blogs/*",
-	    		"http://habrahabr.ru/blog/*",
+				"http://habrahabr.ru/*",
 				"http://*.habrahabr.ru/blog/*"
 			],
 			"js": ["js/jquery-1.7.1.min.js", "page/work.js"]
