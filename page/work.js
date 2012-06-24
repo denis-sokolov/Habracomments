@@ -16,8 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$(document).ready(function(){
-	Q = {
+jQuery(document).ready(function($){
+	'use strict';
+	var Q = {
 		container: '#comments',
 		header: '> .title',
 		count: '#comments_count',
@@ -26,16 +27,14 @@ $(document).ready(function(){
 			info: '.info', // Direct descendant of container
 			scoreContainer: '.voting',
 			score: '.score',
-			sub: '.reply_comments',
+			sub: '.reply_comments'
 		}
-	}
+	};
 
+	var comHeader = $(Q.container + Q.header);
+	var comHeaderInfo = $('<span class="sokolovInfo" style="border-bottom: 1px dotted #AFA56A; margin-left: 1em">скрыты ниже <span class="minRating"></span></span>').appendTo(comHeader);
 
-	comHeader = $(Q.container + Q.header);
-	comHeaderInfo = $('<span class="sokolovInfo" style="border-bottom: 1px dotted #AFA56A; margin-left: 1em">скрыты ниже <span class="minRating"></span></span>').appendTo(comHeader);
-	
-	function showAll()
-	{
+	function showAll() {
 		$(Q.container + ' .sokolovHidden').removeClass('sokolovHidden');
 	}
 
@@ -44,7 +43,7 @@ $(document).ready(function(){
 		showAll();
 		$(Q.container + ' ' + Q.comment.container).each(function(){
 			var me = $(this);
-			var rating = parseInt(me.children(Q.comment.info).find(Q.comment.score).text().replace('–','-'));
+			var rating = parseInt(me.children(Q.comment.info).find(Q.comment.score).text().replace('–','-'), 10);
 			if (rating < minRating)
 				me.addClass('sokolovHidden');
 		});
@@ -53,9 +52,9 @@ $(document).ready(function(){
 
 	// Init
 	$('<style type="text/css"></style>').text(
-		Q.container + ' .sokolovHidden '+Q.comment.info+':hover { background-color: #B4FA8D }'
-		+ Q.container + ' .sokolovHidden > *:not('+Q.comment.info+'):not('+Q.comment.sub+') { display: none }'
-		+ Q.container + ' .sokolovHidden > '+Q.comment.sub+'{ margin-top: 0 !important}'
+		Q.container + ' .sokolovHidden '+Q.comment.info+':hover { background-color: #B4FA8D }' +
+		Q.container + ' .sokolovHidden > *:not('+Q.comment.info+'):not('+Q.comment.sub+') { display: none }' +
+		Q.container + ' .sokolovHidden > '+Q.comment.sub+'{ margin-top: 0 !important}'
 	).appendTo('head');
 
 	$(Q.container).on('click', ' .sokolovHidden '+Q.comment.info, function(e){
@@ -63,14 +62,14 @@ $(document).ready(function(){
 	});
 
 	comHeaderInfo.click(function(){
-		minRating = prompt('Какой поставить минимальный рейтинг?');
-		if (typeof minRating != 'undefined')
+		var minRating = prompt('Какой поставить минимальный рейтинг?');
+		if (typeof minRating !== 'undefined')
 			filter(minRating);
 	});
 	// Endinit
 
 
-	comCount = parseInt(comHeader.find(Q.count).text());
+	var comCount = parseInt(comHeader.find(Q.count).text(), 10);
 	if (comCount < 8)
 		filter(-1);
 	else if (comCount < 25)
