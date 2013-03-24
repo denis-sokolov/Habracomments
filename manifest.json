@@ -16,7 +16,7 @@
 				"http://habrahabr.ru/*",
 				"http://*.habrahabr.ru/blog/*"
 			],
-			"js": ["js/jquery-1.7.2.min.js", "page/work.js"]
+			"js": ["js/jquery-1.9.1.min.js", "page/work.js"]
 		}
 	],
 	"permissions": [
