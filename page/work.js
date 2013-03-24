@@ -63,7 +63,7 @@ jQuery(document).ready(function($){
 	).appendTo('head');
 
 	$(Q.container).on('click', ' .sokolovHidden '+Q.comment.info, function(e){
-		$(this).parents('.sokolovHidden').eq(0).removeClass('sokolovHidden');
+		$(this).closest('.sokolovHidden').removeClass('sokolovHidden');
 	});
 
 	comHeaderInfo.click(function(){
