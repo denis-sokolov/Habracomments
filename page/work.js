@@ -24,7 +24,7 @@ jQuery(document).ready(function($){
 		count: '#comments_count',
 		comment: {
 			container: '.comment_item',
-			info: '.info', // Direct descendant of container
+			info: '.info',
 			scoreContainer: '.voting',
 			score: '.score',
 			sub: '.reply_comments'
@@ -48,7 +48,7 @@ jQuery(document).ready(function($){
 		showAll();
 		$(Q.container + ' ' + Q.comment.container).each(function(){
 			var me = $(this);
-			var rating = parseInt(me.children(Q.comment.info).find(Q.comment.score).text().replace('–','-'), 10);
+			var rating = parseInt(me.find(Q.comment.info+':eq(0)').find(Q.comment.score).text().replace('–','-'), 10);
 			if (rating < minRating)
 				me.addClass('sokolovHidden');
 		});
@@ -57,8 +57,8 @@ jQuery(document).ready(function($){
 
 	// Init
 	$('<style type="text/css"></style>').text(
-		Q.container + ' .sokolovHidden '+Q.comment.info+':hover { background-color: #B4FA8D }' +
-		Q.container + ' .sokolovHidden > *:not('+Q.comment.info+'):not('+Q.comment.sub+') { display: none }' +
+		Q.container + ' .sokolovHidden > .comment_body > '+Q.comment.info+':hover { background-color: #B4FA8D }' +
+		Q.container + ' .sokolovHidden > .comment_body > *:not('+Q.comment.info+') { display: none }' +
 		Q.container + ' .sokolovHidden > '+Q.comment.sub+'{ margin-top: 0 !important}'
 	).appendTo('head');
 
