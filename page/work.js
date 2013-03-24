@@ -68,8 +68,8 @@ jQuery(document).ready(function($){
 
 	comHeaderInfo.click(function(){
 		var minRating = prompt('Какой поставить минимальный рейтинг?');
-		if (typeof minRating !== 'undefined')
-			filter(minRating);
+		if (typeof minRating === 'string')
+			filter(parseInt(minRating, 10));
 	});
 	// Endinit
 
